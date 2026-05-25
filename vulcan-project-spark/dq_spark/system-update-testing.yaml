@@ -1,0 +1,29 @@
+kind: dq
+name: system_update_testing_dq
+depends_on: s3depot.demolake04.system_update_testing
+
+rules:
+  - row_count > 0:
+      name: has_rows
+      dimension: completeness
+      description: "System update testing table must have at least one row"
+
+  - missing_count(test_state) = 0:
+      name: no_missing_test_state
+      dimension: completeness
+      description: "Every testing record must have a test state"
+
+  - duplicate_count(_id) = 0:
+      name: unique_testing_ids
+      dimension: uniqueness
+      description: "System update testing IDs must be unique"
+
+  - failed rows:
+      name: valid_date_range
+      dimension: validity
+      fail query: |
+        SELECT * FROM s3depot.demolake04.system_update_testing
+        WHERE end_date < start_date
+          AND end_date IS NOT NULL
+          AND start_date IS NOT NULL
+      description: "Test end date must not be before start date"

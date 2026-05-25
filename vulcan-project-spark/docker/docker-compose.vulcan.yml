@@ -1,0 +1,99 @@
+# Vulcan API + GraphQL + MySQL wire (Postgres).
+# Just run: make up
+
+x-vulcan-env: &vulcan_env
+  PROJECT_PATH: /workspace
+  MINIO_ENDPOINT: http://minio:9000
+  STATESTORE_HOST: statestore
+  STATESTORE_PORT: "5432"
+  POSTGRES_HOST: warehouse
+  POSTGRES_PORT: "5432"
+  POSTGRES_DATABASE: warehouse
+  POSTGRES_USER: vulcan
+  POSTGRES_PASSWORD: vulcan
+  POSTGRES_SCHEMA: public
+  STATE_SCHEMA: vulcan_try
+
+x-images:
+  vulcan: &vulcan_image "tmdcio/vulcan-spark:0.228.1.15"
+  vulcan-graphql: &vulcan_graphql_image "tmdcio/vulcan-graphql:0.228.1.15"
+  vulcan-mysql: &vulcan_mysql_image "tmdcio/mysql-wire:0.0.4"
+
+networks:
+  vulcan:
+    external: true
+
+services:
+  vulcan-api:
+    image: *vulcan_image
+    working_dir: /workspace
+    command: ["vulcan", "--log-to-stdout", "api", "--host", "0.0.0.0", "--port", "8000"]
+    env_file: ../.env
+    environment:
+      <<: *vulcan_env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../:/workspace
+    restart: unless-stopped
+    networks:
+      - vulcan
+
+  vulcan-graphql:
+    image: *vulcan_graphql_image
+    environment:
+      VULCAN_API_URL: http://vulcan-api:8000
+      VULCAN_TENANT_ID: default
+      VULCAN_DB_TYPE: postgres
+    depends_on:
+      - vulcan-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - vulcan
+
+  vulcan-mysql:
+    image: *vulcan_mysql_image
+    ports:
+      - "3307:3306"
+      - "8081:8080"
+    environment:
+      LOG_LEVEL: debug
+      MODE: "server"
+      MYSQL_HOST: "0.0.0.0"
+      MYSQL_PORT: "3306"
+      MYSQL_DB_NAME: "vulcan"
+      MYSQL_MAX_CONNECTIONS: "1000"
+      MYSQL_HANDSHAKE_TIMEOUT: "10"
+      MYSQL_CONN_READ_TIMEOUT: "3600"
+      MYSQL_CONN_WRITE_TIMEOUT: "300"
+      SLOW_QUERY_THRESHOLD: "10"
+      MYSQL_SSL_CERT_FILE: "/ssl/server.crt"
+      MYSQL_SSL_KEY_FILE: "/ssl/server.key"
+      HEIMDALL_URL: https://neptune-021726.dataos.cloud/heimdall
+      HEIMDALL_AUTH_PATH: /api/v1/authorize
+      HEIMDALL_TIMEOUT: "10"
+      DATAOS_RUN_AS_USER: localdev
+      DATAOS_RUN_AS_APIKEY: ""
+      HTTP_HOST: "0.0.0.0"
+      HTTP_PORT: "8080"
+      VULCAN_API_URL: http://vulcan-api:8000
+      VULCAN_ENVIRONMENT: prod
+      VULCAN_QUERY_TTL_MINUTES: "60"
+      VULCAN_API_POLL_INITIAL_MS: "1000"
+      VULCAN_API_POLL_MAX_MS: "5000"
+      VULCAN_API_QUERY_TIMEOUT: "300"
+    volumes:
+      - ./ssl:/ssl:ro
+    depends_on:
+      - vulcan-api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/livez"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - vulcan

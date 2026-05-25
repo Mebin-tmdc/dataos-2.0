@@ -1,0 +1,180 @@
+MODEL (
+  name s3depot.device_08.device_warranty,
+  grain _id,
+  cron '*/5 * * * *',
+  kind FULL,
+  description 'Cleaned CDC data with deduplication logic for device warranty',
+  physical_properties (
+    format = 'iceberg'
+  ),
+  columns (
+    _id STRING,
+    org_id STRING,
+    device_id STRING,
+    device_name STRING,
+    serial_number STRING,
+    device_category STRING,
+    created_at TIMESTAMP,
+    last_updated TIMESTAMP,
+    warranty_id STRING,
+    warranty_number STRING,
+    warranty_type STRING,
+    warranty_start TIMESTAMP,
+    warranty_end TIMESTAMP,
+    warranty_name STRING,
+    warranty_category STRING,
+    warranty_delivery_type STRING,
+    warranty_description STRING,
+    warranty_duration STRING,
+    warranty_service_profile STRING,
+    warranty_response_profile STRING,
+    _nilus_load_id TIMESTAMP,
+    _nilus_id STRING
+  ),
+  column_descriptions (
+    _id = 'Unique warranty record identifier and model grain.',
+    org_id = 'Organization identifier that owns the device.',
+    device_id = 'Business device identifier associated with the warranty.',
+    device_name = 'Display name of the device covered by the warranty.',
+    serial_number = 'Serial number of the device covered by the warranty.',
+    device_category = 'Normalized device category for the covered device.',
+    created_at = 'Timestamp when the warranty record was created.',
+    last_updated = 'Timestamp when the warranty record was last updated.',
+    warranty_id = 'Warranty identifier from the source system.',
+    warranty_number = 'Warranty number assigned by the vendor or source.',
+    warranty_type = 'Type of warranty coverage (base, extended, on-site, etc.).',
+    warranty_start = 'Timestamp when warranty coverage begins.',
+    warranty_end = 'Timestamp when warranty coverage ends.',
+    warranty_name = 'Display name of the warranty offering.',
+    warranty_category = 'High-level warranty category classification.',
+    warranty_delivery_type = 'Delivery type for warranty service (on-site, depot, etc.).',
+    warranty_description = 'Free-text description of the warranty coverage.',
+    warranty_duration = 'Declared duration of the warranty coverage.',
+    warranty_service_profile = 'Service profile associated with the warranty.',
+    warranty_response_profile = 'Response-time profile associated with the warranty.',
+    _nilus_load_id = 'Ingestion load identifier assigned by Nilus.',
+    _nilus_id = 'Ingestion record identifier assigned by Nilus.'
+  ),
+  column_tags (
+    _id = ('identifier', 'primary_key', 'grain', 'warranty'),
+    org_id = ('identifier', 'organization', 'warranty'),
+    device_id = ('identifier', 'device', 'warranty'),
+    device_name = ('dimension', 'device', 'display-name'),
+    serial_number = ('identifier', 'device', 'serial-number'),
+    device_category = ('classification', 'device', 'category'),
+    created_at = ('timestamp', 'warranty', 'created_at'),
+    last_updated = ('timestamp', 'warranty', 'updated_at'),
+    warranty_id = ('identifier', 'warranty', 'business-key'),
+    warranty_number = ('identifier', 'warranty', 'number'),
+    warranty_type = ('classification', 'warranty', 'type'),
+    warranty_start = ('timestamp', 'warranty', 'start'),
+    warranty_end = ('timestamp', 'warranty', 'end'),
+    warranty_name = ('dimension', 'warranty', 'name'),
+    warranty_category = ('classification', 'warranty', 'category'),
+    warranty_delivery_type = ('classification', 'warranty', 'delivery'),
+    warranty_description = ('dimension', 'warranty', 'description'),
+    warranty_duration = ('dimension', 'warranty', 'duration'),
+    warranty_service_profile = ('classification', 'warranty', 'service-profile'),
+    warranty_response_profile = ('classification', 'warranty', 'response-profile'),
+    _nilus_load_id = ('metadata', 'ingestion', 'load_id'),
+    _nilus_id = ('metadata', 'ingestion', 'record_id')
+  ),
+  column_terms (
+    _id = ('device_warranty.record_id', 'identity.primary_key'),
+    org_id = ('device_warranty.organization_id', 'organization.identifier'),
+    device_id = ('device_warranty.device_id', 'device.identifier'),
+    device_name = ('device_warranty.device_name', 'device.display_name'),
+    serial_number = ('device_warranty.serial_number', 'identity.serial_number'),
+    device_category = ('device_warranty.device_category', 'device.category'),
+    created_at = ('device_warranty.created_at', 'record.created_at'),
+    last_updated = ('device_warranty.last_updated', 'record.updated_at'),
+    warranty_id = ('device_warranty.warranty_id', 'warranty.identifier'),
+    warranty_number = ('device_warranty.warranty_number', 'warranty.number'),
+    warranty_type = ('device_warranty.warranty_type', 'warranty.type'),
+    warranty_start = ('device_warranty.warranty_start', 'warranty.start_date'),
+    warranty_end = ('device_warranty.warranty_end', 'warranty.end_date'),
+    warranty_name = ('device_warranty.warranty_name', 'warranty.name'),
+    warranty_category = ('device_warranty.warranty_category', 'warranty.category'),
+    warranty_delivery_type = ('device_warranty.warranty_delivery_type', 'warranty.delivery_type'),
+    warranty_description = ('device_warranty.warranty_description', 'warranty.description'),
+    warranty_duration = ('device_warranty.warranty_duration', 'warranty.duration'),
+    warranty_service_profile = ('device_warranty.warranty_service_profile', 'warranty.service_profile'),
+    warranty_response_profile = ('device_warranty.warranty_response_profile', 'warranty.response_profile'),
+    _nilus_load_id = ('device_warranty.load_id', 'ingestion.load_id'),
+    _nilus_id = ('device_warranty.nilus_id', 'ingestion.record_id')
+  ),
+  profiles (
+    _id,
+    org_id,
+    device_id,
+    device_name,
+    serial_number,
+    device_category,
+    created_at,
+    last_updated,
+    warranty_id,
+    warranty_number,
+    warranty_type,
+    warranty_start,
+    warranty_end,
+    warranty_name,
+    warranty_category,
+    warranty_delivery_type,
+    warranty_description,
+    warranty_duration,
+    warranty_service_profile,
+    warranty_response_profile,
+    _nilus_load_id,
+    _nilus_id
+  )
+);
+
+
+-- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_cdc
+-- USING json
+-- OPTIONS (
+--   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_cdc.json',
+--   'multiline' 'true'
+-- );
+
+
+-- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_full
+-- USING json
+-- OPTIONS (
+--   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_full.json',
+--   'multiline' 'true'
+-- );
+
+SELECT
+    _id,
+    org_id,
+    device_id,
+    device_name,
+    serial_number,
+    device_category,
+    cast(created_at AS timestamp)                            AS created_at,
+    cast(last_updated AS timestamp)                          AS last_updated,
+    warranty_id,
+    warranty_number,
+    warranty_type,
+    cast(warranty_start AS timestamp)                        AS warranty_start,
+    cast(warranty_end AS timestamp)                          AS warranty_end,
+    warranty_name,
+    warranty_category,
+    warranty_delivery_type,
+    warranty_description,
+    warranty_duration,
+    warranty_service_profile,
+    warranty_response_profile,
+    to_timestamp(from_unixtime(CAST(_nilus_load_id AS DOUBLE))) AS _nilus_load_id,
+    _nilus_id
+FROM (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY _id
+            ORDER BY CAST(_nilus_load_id AS BIGINT) DESC
+        ) AS rn
+    FROM s3depot.demolake04.device_warranty
+)
+WHERE rn = 1;

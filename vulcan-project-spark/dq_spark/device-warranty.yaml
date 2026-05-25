@@ -1,0 +1,29 @@
+kind: dq
+name: device_warranty_dq
+depends_on: s3depot.demolake04.device_warranty
+
+rules:
+  - row_count > 0:
+      name: has_rows
+      dimension: completeness
+      description: "Device warranty table must have at least one row"
+
+  - missing_count(device_id) = 0:
+      name: no_missing_device_id
+      dimension: completeness
+      description: "Every warranty record must be linked to a device"
+
+  - duplicate_count(warranty_id) = 0:
+      name: unique_warranty_ids
+      dimension: uniqueness
+      description: "Warranty IDs must be unique"
+
+  - failed rows:
+      name: valid_warranty_date_range
+      dimension: validity
+      fail query: |
+        SELECT * FROM s3depot.demolake04.device_warranty
+        WHERE warranty_end < warranty_start
+          AND warranty_end IS NOT NULL
+          AND warranty_start IS NOT NULL
+      description: "Warranty end date must not be before warranty start date"

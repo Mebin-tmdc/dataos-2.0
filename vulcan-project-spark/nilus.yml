@@ -1,0 +1,28 @@
+name: nilus-batch-system-update-report-test
+version: v1alpha
+type: nilus
+tags:
+  - workflow
+  - nilus-batch
+description: Batch sync system_update_report from Snowflake depot
+spec:
+  type: batch
+  compute: ct-sandbox-compute
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: "4Gi"
+    limits:
+      cpu: "4000m"
+      memory: "8Gi"
+  source:
+    address: dataos://snowlenovodepot?purpose=rw
+    options:
+      source_table: "query: SELECT * FROM TEST_SCHEMA.SYSTEM_UPDATE_REPORT"
+      extract_parallelism: 4
+      page_size: 50000
+  sink:
+    address: dataos://s3depot?purpose=rw
+    options:
+      dest_table: demolake03.system_update_report
+      incremental_strategy: replace

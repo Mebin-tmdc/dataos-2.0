@@ -1,0 +1,29 @@
+kind: dq
+name: issues_dq
+depends_on: s3depot.demolake04.issues
+
+rules:
+  - row_count > 0:
+      name: has_rows
+      dimension: completeness
+      description: "Issues table must have at least one row"
+
+  - missing_count(device_id) = 0:
+      name: no_missing_device_id
+      dimension: completeness
+      description: "Every issue must be linked to a device"
+
+  - duplicate_count(issue_uuid) = 0:
+      name: unique_issue_uuids
+      dimension: uniqueness
+      description: "Issue UUIDs must be unique"
+
+  - failed rows:
+      name: resolved_after_reported
+      dimension: validity
+      fail query: |
+        SELECT * FROM s3depot.demolake04.issues
+        WHERE resolved_at < reported_at
+          AND resolved_at IS NOT NULL
+          AND reported_at IS NOT NULL
+      description: "Issue resolved_at cannot be earlier than reported_at"

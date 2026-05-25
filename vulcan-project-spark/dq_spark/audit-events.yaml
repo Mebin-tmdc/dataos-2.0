@@ -1,0 +1,28 @@
+kind: dq
+name: audit_events_dq
+depends_on: s3depot.demolake04.audit_events
+
+rules:
+  - row_count > 0:
+      name: has_rows
+      dimension: completeness
+      description: "Audit events table must have at least one row"
+
+  - missing_count(action) = 0:
+      name: no_missing_action
+      dimension: completeness
+      description: "Every audit event must have an action type"
+
+  - duplicate_count(_id) = 0:
+      name: unique_audit_event_ids
+      dimension: uniqueness
+      description: "Audit event IDs must be unique"
+
+  - failed rows:
+      name: valid_entity_type
+      dimension: validity
+      fail query: |
+        SELECT * FROM s3depot.demolake04.audit_events
+        WHERE entity_type NOT IN ('DEVICE', 'USER', 'ORG', 'SUBSCRIPTION', 'POLICY')
+          AND entity_type IS NOT NULL
+      description: "Entity type must be from the valid set"
