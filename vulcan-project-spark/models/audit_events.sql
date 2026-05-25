@@ -97,6 +97,6 @@ FROM (
             PARTITION BY _id
             ORDER BY CAST(_nilus_load_id AS BIGINT) DESC
         ) AS rn
-    FROM s3depot.demolake04.audit_events
+    FROM s3depot.demolake04.audit_event
 )
 WHERE rn = 1;

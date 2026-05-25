@@ -1,4 +1,4 @@
-- name: '"s3depot"."demolake04"."audit_events"'
+- name: '"s3depot"."demolake04"."audit_event"'
   columns:
     _id: VARCHAR
     org_id: VARCHAR
