@@ -1,6 +1,6 @@
 kind: dq
 name: system_update_devices_dq
-depends_on: s3depot.demolake04.system_update_devices
+depends_on: s3depot.device_08.system_update_devices
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_package_severity
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.system_update_devices
+        SELECT * FROM s3depot.device_08.system_update_devices
         WHERE package_severity NOT IN ('CRITICAL', 'RECOMMENDED', 'OPTIONAL')
           AND package_severity IS NOT NULL
       description: "Package severity must be CRITICAL, RECOMMENDED, or OPTIONAL"

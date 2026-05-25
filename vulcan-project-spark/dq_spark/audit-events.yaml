@@ -1,6 +1,6 @@
 kind: dq
 name: audit_events_dq
-depends_on: s3depot.demolake04.audit_events
+depends_on: s3depot.device_08.audit_events
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_entity_type
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.audit_events
+        SELECT * FROM s3depot.device_08.audit_events
         WHERE entity_type NOT IN ('DEVICE', 'USER', 'ORG', 'SUBSCRIPTION', 'POLICY')
           AND entity_type IS NOT NULL
       description: "Entity type must be from the valid set"

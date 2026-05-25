@@ -1,6 +1,6 @@
 kind: dq
 name: battery_dq
-depends_on: s3depot.demolake04.battery
+depends_on: s3depot.device_08.battery
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: remaining_within_design_capacity
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.battery
+        SELECT * FROM s3depot.device_08.battery
         WHERE battery_remaining_capacity > battery_design_capacity
           AND battery_design_capacity IS NOT NULL
           AND battery_remaining_capacity IS NOT NULL

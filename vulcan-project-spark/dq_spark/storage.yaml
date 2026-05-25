@@ -1,6 +1,6 @@
 kind: dq
 name: storage_dq
-depends_on: s3depot.demolake04.storage
+depends_on: s3depot.device_08.storage
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_used_percentage
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.storage
+        SELECT * FROM s3depot.device_08.storage
         WHERE storage_used_percentage < 0
            OR storage_used_percentage > 100
       description: "Storage used percentage must be between 0 and 100"

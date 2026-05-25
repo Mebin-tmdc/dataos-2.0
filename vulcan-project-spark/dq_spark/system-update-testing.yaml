@@ -1,6 +1,6 @@
 kind: dq
 name: system_update_testing_dq
-depends_on: s3depot.demolake04.system_update_testing
+depends_on: s3depot.device_08.system_update_testing
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_date_range
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.system_update_testing
+        SELECT * FROM s3depot.device_08.system_update_testing
         WHERE end_date < start_date
           AND end_date IS NOT NULL
           AND start_date IS NOT NULL

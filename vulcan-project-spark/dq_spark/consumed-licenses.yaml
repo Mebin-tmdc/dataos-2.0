@@ -1,6 +1,6 @@
 kind: dq
 name: consumed_licenses_dq
-depends_on: s3depot.demolake04.consumed_licenses
+depends_on: s3depot.device_08.consumed_licenses
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_status
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.demolake04.consumed_licenses
+        SELECT * FROM s3depot.device_08.consumed_licenses
         WHERE status NOT IN ('ASSIGNED', 'NEW', 'UNASSIGNED', 'EXPIRED')
           AND status IS NOT NULL
       description: "License status must be from the valid set"
