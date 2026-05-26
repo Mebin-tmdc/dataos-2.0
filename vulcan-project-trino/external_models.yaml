@@ -50,7 +50,6 @@
     _nilus_load_id: VARCHAR
     _nilus_id: VARCHAR
     status: VARCHAR
-    registration_type: VARCHAR
 
 - name: '"s3depot"."device_meb"."issues"'
   grain: issue_uuid
