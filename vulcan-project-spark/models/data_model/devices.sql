@@ -104,30 +104,6 @@ MODEL (
     _nilus_id = ('devices.nilus_id', 'ingestion.record_id'),
     status = ('devices.status', 'device.status'),
     registration_type = ('devices.registration_type', 'device.registration_type')
-  ),
-  profiles (
-    id,
-    device_id,
-    org_id,
-    serial_number,
-    model_type,
-    family,
-    manufacturer,
-    created_at,
-    updated_at,
-    is_active,
-    category,
-    model_name,
-    trust_anchor,
-    platform,
-    org_device_id,
-    subscription_id,
-    device_category,
-    name,
-    _nilus_load_id,
-    _nilus_id,
-    status,
-    registration_type
   )
 );
 

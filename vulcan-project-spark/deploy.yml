@@ -3,17 +3,18 @@ type: vulcan
 name: device360sadpmebin
 tags:
   - spark
-  - device-360-sadp
+  - device-orch-360
 spec:
-  compute: ct-sandbox-compute 
+  runAsUser: "mebinmoncytmdcio"
+  compute: lnv-compute
   engine: spark
-  repo: 
+  repo:
     url: https://github.com/Mebin-tmdc/dataos-2.0
     syncFlags:
-      - '--ref=main'
-      - '--submodules=off'
+      - "--ref=main"
+      - "--submodules=off"
     baseDir: dataos-2.0/vulcan-project-spark
-    secret: ct-sandbox:git-sync
+    secret: sandbox:git-sync
   depots:
     - dataos://s3depot?purpose=rw
   workflow:
