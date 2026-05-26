@@ -102,48 +102,10 @@ MODEL (
     warranty_response_profile = ('device_warranty.warranty_response_profile', 'warranty.response_profile'),
     _nilus_load_id = ('device_warranty.load_id', 'ingestion.load_id'),
     _nilus_id = ('device_warranty.nilus_id', 'ingestion.record_id')
-  ),
-  profiles (
-    _id,
-    org_id,
-    device_id,
-    device_name,
-    serial_number,
-    device_category,
-    created_at,
-    last_updated,
-    warranty_id,
-    warranty_number,
-    warranty_type,
-    warranty_start,
-    warranty_end,
-    warranty_name,
-    warranty_category,
-    warranty_delivery_type,
-    warranty_description,
-    warranty_duration,
-    warranty_service_profile,
-    warranty_response_profile,
-    _nilus_load_id,
-    _nilus_id
   )
 );
 
 
--- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_cdc
--- USING json
--- OPTIONS (
---   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_cdc.json',
---   'multiline' 'true'
--- );
-
-
--- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_full
--- USING json
--- OPTIONS (
---   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_full.json',
---   'multiline' 'true'
--- );
 
 SELECT
     _id,

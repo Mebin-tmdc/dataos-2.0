@@ -110,32 +110,6 @@ MODEL (
     s_id = ('issues.s_id', 'issue.source_id'),
     details = ('issues.details', 'issue.details'),
     avg_cpu_usage = ('issues.avg_cpu_usage', 'issue.cpu_usage')
-  ),
-  profiles (
-    issue_uuid,
-    bucket_id,
-    category,
-    hardware_id,
-    reported_at,
-    resolved_at,
-    status,
-    timeline,
-    updated_at,
-    value,
-    device_id,
-    insight_id,
-    generate_ticket,
-    has_ticket,
-    is_hidden,
-    insight_item_id,
-    _nilus_load_id,
-    _nilus_id,
-    battery_id,
-    predicted_to_occur_on,
-    code,
-    s_id,
-    details,
-    avg_cpu_usage
   )
 );
 

@@ -1,6 +1,6 @@
 version: v1alpha
 type: vulcan
-name: device360sadptest
+name: device360sadpmebin
 tags:
   - spark
   - device-360-sadp

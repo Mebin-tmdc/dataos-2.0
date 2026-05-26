@@ -1,6 +1,6 @@
 MODEL (
   name s3depot.device_08.devices,
-  grain id,
+  grain id,    
   cron '*/30 * * * *',
   kind FULL,
   description 'Latest deduplicated device inventory records for device orchestration, including device identity, lifecycle flags, and registration attributes.',
@@ -130,22 +130,6 @@ MODEL (
     registration_type
   )
 );
-
-
--- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_cdc
--- USING json
--- OPTIONS (
---   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_cdc.json',
---   'multiline' 'true'
--- );
-
-
--- CREATE OR REPLACE TEMP VIEW _temp_view_device_warranty_full
--- USING json
--- OPTIONS (
---   'path' 's3a://warehouse/lenovo/01-14-2026-14-32-42_files_list/device_warranty_full.json',
---   'multiline' 'true'
--- );
 
 SELECT
     id,
