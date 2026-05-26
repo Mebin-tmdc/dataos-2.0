@@ -7,7 +7,7 @@ domain: LDO
 alignment: source_aligned
 model_defaults:
   dialect: spark2
-  start: '2025-01-01'
+  start: '2026-01-01'
   cron: '*/30 * * * *'
 tags:
   - spark
