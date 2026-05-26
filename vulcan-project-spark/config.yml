@@ -1,6 +1,6 @@
-name: devicesadpme
-display_name: Device Orch 360 Source Aligned Data Product (SADP)
-description: "Device Orch 360 Source Aligned Data Product (SADP)"
+name: devicesadppari
+display_name: Pari's Device Orch 360 Source Aligned Data Product
+description: "Pari's Device Orch 360 Source Aligned Data Product"
 discoverable: true
 version: 0.0.1
 domain: LDO
@@ -40,6 +40,6 @@ gateways:
 
 
 users:
-  - username: mebinmoncytmdcio
-    email: mebin.moncy@tmdc.io
+  - username: prajarathina_lenovocomextrubikdatasolutionsonmicrosoftcom
+    email: prajarathina_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
     type: OWNER

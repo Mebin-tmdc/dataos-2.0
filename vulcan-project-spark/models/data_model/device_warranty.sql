@@ -1,5 +1,5 @@
 MODEL (
-  name s3depot.device_meb.device_warranty,
+  name s3depot.device_pari.device_warranty,
   grain _id,
   cron '*/5 * * * *',
   kind FULL,

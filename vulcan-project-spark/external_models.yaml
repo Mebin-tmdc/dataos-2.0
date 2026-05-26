@@ -72,3 +72,21 @@
     warranty_response_profile: VARCHAR
     _nilus_load_id: VARCHAR
     _nilus_id: VARCHAR
+
+- name: '"s3depot"."demolake04"."battery"'
+  columns:
+    battery_id: VARCHAR
+    device_id: VARCHAR
+    battery_condition: VARCHAR
+    battery_cycle_count: VARCHAR
+    battery_design_capacity: VARCHAR
+    battery_firstused_date: VARCHAR
+    battery_fullcharge_capacity: VARCHAR
+    battery_manufacture_date: VARCHAR
+    battery_manufacture_name: VARCHAR
+    battery_remaining_capacity: VARCHAR
+    battery_serial_number: VARCHAR
+    battery_warranty_date: VARCHAR
+    battery_warranty_status: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR

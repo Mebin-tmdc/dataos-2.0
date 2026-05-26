@@ -6,7 +6,7 @@ from vulcan import ExecutionContext, model
 from vulcan import ModelKindName
 
 @model(
-    "s3depot.device_meb.device_issue_forecast",
+    "s3depot.device_pari.device_issue_forecast",
     columns={
         "forecast_date": "timestamp",
         "device_id": "string",
@@ -25,7 +25,7 @@ from vulcan import ModelKindName
         name=ModelKindName.FULL,
     ),
     grains=["forecast_date", "device_id", "category"],
-    depends_on=["s3depot.device_meb.issues", "s3depot.device_meb.devices"],
+    depends_on=["s3depot.device_pari.issues", "s3depot.device_pari.devices"],
     cron='@daily',
     tags=["ml", "forecasting", "device_issues", "predictive"],
     terms=["device.forecast", "ml.issue_prediction"],
@@ -110,8 +110,8 @@ def execute(
         d.manufacturer,
         d.is_active,
         d.platform
-    FROM s3depot.device_meb.issues i
-    LEFT JOIN s3depot.device_meb.devices d
+    FROM s3depot.device_pari.issues i
+    LEFT JOIN s3depot.device_pari.devices d
         ON (i.device_id = d.id OR i.device_id = d.device_id)
     WHERE i.reported_at IS NOT NULL
         AND (d.is_active = true OR d.is_active IS NULL)
