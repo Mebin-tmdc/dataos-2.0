@@ -111,4 +111,4 @@ MODEL (
 
 SELECT
   *
-FROM s3depot.device_08.issues
+FROM s3depot.device_meb.issues

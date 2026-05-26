@@ -103,4 +103,4 @@ MODEL (
 
 SELECT
   *
-FROM s3depot.device_08.devices
+FROM s3depot.device_meb.devices
