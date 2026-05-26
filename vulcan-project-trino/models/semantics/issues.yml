@@ -1,0 +1,322 @@
+# Converted from legacy: semantics/issues.yml (physical model is s3depot.device_cadp.issues)
+kind: semantic
+name: issues
+depends_on: s3depot.device_cadp.issues
+description: Device hardware and software issue diagnostics (semantic layer)
+
+ai_context:
+  instructions: >
+    Device diagnostic issues dimension. Use for tracking open, resolved, and ticketed issues per device.
+    Join to battery for battery-related issue correlation.
+    Member names use semantic_model.member form (e.g. issues.status).
+  synonyms:
+    - device issues
+    - diagnostics
+    - device alerts
+    - hardware issues
+dimensions:
+  - name: issue_uuid
+    description: Issue uuid attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.issue_uuid
+      - identifier.issue_uuid
+  - name: bucket_id
+    description: Bucket id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.bucket_id
+      - identifier.bucket_id
+  - name: category
+    description: Issue category classification from the source system
+    ai_context:
+      instructions: Primary classification dimension for issues. Use to group issues by diagnostic category.
+      synonyms:
+        - issue type
+        - problem category
+    tags:
+      - issues
+      - classification
+      - category
+    terms:
+      - issue.category
+      - health.issue_category
+  - name: hardware_id
+    description: Hardware id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.hardware_id
+      - identifier.hardware_id
+  - name: reported_at
+    description: Timestamp when the issue was first reported
+    ai_context:
+      instructions: Use as the time axis for issue trend and volume analysis over time.
+      synonyms:
+        - issue date
+        - first seen
+        - detection date
+    tags:
+      - issues
+      - temporal
+      - reported_at
+    terms:
+      - issue.reported_at
+      - temporal.issue_detection
+  - name: resolved_at
+    description: Resolved at attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.resolved_at
+      - dimension.resolved_at
+  - name: status
+    description: Current lifecycle status of the issue (open, resolved, etc.)
+    ai_context:
+      instructions: Use to filter open vs. resolved issues. Combine with category for issue health breakdown.
+      synonyms:
+        - issue state
+        - resolution status
+        - lifecycle status
+    tags:
+      - issues
+      - lifecycle
+      - status
+    terms:
+      - issue.status
+      - health.issue_state
+  - name: timeline
+    description: Timeline attribute for the issues semantic model.
+    tags:
+      - issues
+      - temporal
+      - timestamp
+    terms:
+      - issues.timeline
+      - temporal.timeline
+  - name: updated_at
+    description: Timestamp when the record was last updated.
+    tags:
+      - issues
+      - temporal
+      - date
+    terms:
+      - issues.updated_at
+      - temporal.updated_at
+  - name: value
+    description: Value attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.value
+      - dimension.value
+  - name: device_id
+    description: Business identifier for the associated device.
+    tags:
+      - issues
+      - device
+      - identifier
+    terms:
+      - issues.device_id
+      - device.device_id
+  - name: insight_id
+    description: Insight id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.insight_id
+      - identifier.insight_id
+  - name: generate_ticket
+    description: Generate ticket attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.generate_ticket
+      - dimension.generate_ticket
+  - name: has_ticket
+    description: Has ticket attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.has_ticket
+      - dimension.has_ticket
+  - name: is_hidden
+    description: Is hidden attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.is_hidden
+      - identifier.is_hidden
+  - name: insight_item_id
+    description: Insight item id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.insight_item_id
+      - identifier.insight_item_id
+  - name: _nilus_load_id
+    description: Ingestion load identifier from the source pipeline.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues._nilus_load_id
+      - identifier._nilus_load_id
+  - name: _nilus_id
+    description: Ingestion record identifier from the source pipeline.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues._nilus_id
+      - identifier._nilus_id
+  - name: battery_id
+    description: Battery id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.battery_id
+      - identifier.battery_id
+  - name: predicted_to_occur_on
+    description: Timestamp when the issue is predicted to occur
+    ai_context:
+      instructions: Use to surface predictive maintenance alerts before an issue becomes critical.
+      synonyms:
+        - predicted date
+        - forecasted occurrence
+    tags:
+      - issues
+      - prediction
+      - temporal
+    terms:
+      - issue.predicted_date
+      - health.predicted_occurrence
+  - name: code
+    description: Code attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.code
+      - dimension.code
+  - name: s_id
+    description: S id attribute for the issues semantic model.
+    tags:
+      - issues
+      - identifier
+      - key
+    terms:
+      - issues.s_id
+      - identifier.s_id
+  - name: details
+    description: Details attribute for the issues semantic model.
+    tags:
+      - issues
+      - dimension
+      - attribute
+    terms:
+      - issues.details
+      - dimension.details
+  - name: avg_cpu_usage
+    description: Average CPU usage derived for app performance impact insights
+    ai_context:
+      instructions: Only populated for insight_id = app_performance_impact. Use to rank high-CPU-impact issues.
+      synonyms:
+        - CPU impact
+        - average CPU
+        - app performance cpu
+    tags:
+      - issues
+      - performance
+      - measure
+    terms:
+      - issue.avg_cpu_usage
+      - health.cpu_usage
+
+measures:
+  - name: number_of_issues
+    type: count
+    expression: "{issues.issue_uuid}"
+    description: Total number of device issue records
+    ai_context:
+      instructions: Headline issue count. Break down by category, status, or device_id for diagnostics dashboards.
+      synonyms:
+        - issue count
+        - total issues
+        - alert count
+    tags:
+      - issues
+      - health
+      - count
+    terms:
+      - issue.total_count
+      - health.issue_count
+
+segments:
+  - name: open_issues
+    expression: "{issues.resolved_at} IS NULL"
+    description: Issues that are currently unresolved
+    ai_context:
+      instructions: >
+        SQL API: `open_issues IS TRUE`. REST API: `"segments": ["issues.open_issues"]`.
+        Use as the default filter for active issue dashboards.
+      synonyms:
+        - unresolved issues
+        - active issues
+    tags:
+      - issues
+      - open
+      - status
+    terms:
+      - issue.open
+      - health.open_issues
+
+  - name: ticketed_issues
+    expression: "{issues.has_ticket} = true"
+    description: Issues that have an associated support ticket
+    ai_context:
+      instructions: >
+        SQL API: `ticketed_issues IS TRUE`. REST API: `"segments": ["issues.ticketed_issues"]`.
+        Use to correlate issue volume with support ticket load.
+      synonyms:
+        - issues with tickets
+        - support-linked issues
+    tags:
+      - issues
+      - ticketed
+      - support
+    terms:
+      - issue.ticketed
+      - health.ticketed_issues
+
+joins:
+  - name: battery
+    type: many_to_one
+    expression: "{issues.device_id} = {battery.battery_id}"

@@ -1,0 +1,81 @@
+
+
+- name: '"s3depot"."device_08"."device_warranty"'
+  grain: _id
+  columns:
+    _id: VARCHAR
+    org_id: VARCHAR
+    device_id: VARCHAR
+    device_name: VARCHAR
+    serial_number: VARCHAR
+    device_category: VARCHAR
+    created_at: TIMESTAMP
+    last_updated: TIMESTAMP
+    warranty_id: VARCHAR
+    warranty_number: VARCHAR
+    warranty_type: VARCHAR
+    warranty_start: TIMESTAMP
+    warranty_end: TIMESTAMP
+    warranty_name: VARCHAR
+    warranty_category: VARCHAR
+    warranty_delivery_type: VARCHAR
+    warranty_description: VARCHAR
+    warranty_duration: VARCHAR
+    warranty_service_profile: VARCHAR
+    warranty_response_profile: VARCHAR
+    _nilus_load_id: TIMESTAMP
+    _nilus_id: VARCHAR
+
+- name: '"s3depot"."device_08"."devices"'
+  grain: id
+  columns:
+    id: VARCHAR
+    device_id: VARCHAR
+    org_id: VARCHAR
+    serial_number: VARCHAR
+    model_type: VARCHAR
+    family: VARCHAR
+    manufacturer: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+    is_active: BOOLEAN
+    category: VARCHAR
+    model_name: VARCHAR
+    trust_anchor: VARCHAR
+    platform: VARCHAR
+    org_device_id: VARCHAR
+    subscription_id: VARCHAR
+    device_category: VARCHAR
+    name: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR
+    status: VARCHAR
+    registration_type: VARCHAR
+
+- name: '"s3depot"."device_08"."issues"'
+  grain: issue_uuid
+  columns:
+    issue_uuid: VARCHAR
+    bucket_id: VARCHAR
+    category: VARCHAR
+    hardware_id: VARCHAR
+    reported_at: TIMESTAMP
+    resolved_at: TIMESTAMP
+    status: VARCHAR
+    timeline: VARCHAR
+    updated_at: TIMESTAMP
+    value: VARCHAR
+    device_id: VARCHAR
+    insight_id: VARCHAR
+    generate_ticket: BOOLEAN
+    has_ticket: BOOLEAN
+    is_hidden: BOOLEAN
+    insight_item_id: VARCHAR
+    _nilus_load_id: TIMESTAMP
+    _nilus_id: VARCHAR
+    battery_id: VARCHAR
+    predicted_to_occur_on: TIMESTAMP
+    code: VARCHAR
+    s_id: VARCHAR
+    details: VARCHAR
+    avg_cpu_usage: DOUBLE

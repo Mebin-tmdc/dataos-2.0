@@ -1,0 +1,45 @@
+name: device360cadp
+display_name: Device Orch 360 Consumer Aligned Data Product (CADP)
+description: "Device Orch 360 Consumer Aligned Data Product (CADP)"
+discoverable: true
+version: 0.0.1
+domain: LDO
+alignment: consumer_aligned
+model_defaults:
+  dialect: trino
+tags:
+  - trino
+  - device-360-trino
+  - device-360-usecases
+  - device-insights-360
+
+terms:
+  - glossary.data_product
+  - device-insights-trino
+  - device-insights-usecases
+gateways:
+  default:
+    connection:
+      type: trino
+      host: "tcp.lnv-051826.dataos.cloud"
+      port: 7432
+      user: "mebinmoncytmdcio"
+      catalog: "s3depot"
+      http_scheme: https
+      method: basic
+      password: "{{ env_var('TRINO_PASSWORD', '') }}"
+      verify: true
+    # state_connection:
+    #   type: postgres
+    #   host: statestore
+    #   port: 5432
+    #   database: statestore
+    #   user: vulcan
+    #   password: vulcan
+    # state_schema: vulcan_project_trino   
+
+
+users:
+  - username: mebinmoncytmdcio
+    email: mebin.moncy@tmdc.io
+    type: OWNER
