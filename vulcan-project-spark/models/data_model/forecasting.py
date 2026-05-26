@@ -6,7 +6,7 @@ from vulcan import ExecutionContext, model
 from vulcan import ModelKindName
 
 @model(
-    "s3depot.device_meb.device_issue_forecast",
+    "s3depot.device_mithun.device_issue_forecast",
     columns={
         "forecast_date": "timestamp",
         "device_id": "string",

@@ -1,6 +1,6 @@
 kind: dq
 name: devices_dq
-depends_on: s3depot.device_meb.devices
+depends_on: s3depot.device_mithun.devices
 
 rules:
   - row_count > 0:
@@ -22,7 +22,12 @@ rules:
       name: valid_device_category
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.device_meb.devices
+        SELECT * FROM s3depot.device_mithun.devices
         WHERE device_category NOT IN ('PC', 'Mobile/Tablet', 'AR/VR', 'SmartEdge', 'Chromebook')
           AND device_category IS NOT NULL
       description: "Device category must be from the valid set"
+
+  - missing_count(org_id) = 0:
+      name: no_missing_org_id
+      dimension: completeness
+      description: "Every device must have an organization ID"
