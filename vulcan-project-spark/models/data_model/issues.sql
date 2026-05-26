@@ -1,5 +1,5 @@
 MODEL (
-  name s3depot.device_08.issues,
+  name s3depot.device_meb.issues,
   grain issue_uuid,
   cron '*/5 * * * *',
   kind FULL,

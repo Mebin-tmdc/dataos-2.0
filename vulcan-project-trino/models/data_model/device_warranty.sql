@@ -103,4 +103,4 @@ MODEL (
 
 SELECT
   *
-FROM s3depot.device_08.device_warranty
+FROM s3depot.device_meb.device_warranty
