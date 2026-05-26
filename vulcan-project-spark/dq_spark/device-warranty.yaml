@@ -1,6 +1,6 @@
 kind: dq
 name: device_warranty_dq
-depends_on: s3depot.device_meb.device_warranty
+depends_on: s3depot.device_sri.device_warranty
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: valid_warranty_date_range
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.device_meb.device_warranty
+        SELECT * FROM s3depot.device_sri.device_warranty
         WHERE warranty_end < warranty_start
           AND warranty_end IS NOT NULL
           AND warranty_start IS NOT NULL
