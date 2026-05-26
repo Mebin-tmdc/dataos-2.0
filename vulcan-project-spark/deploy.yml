@@ -5,7 +5,7 @@ tags:
   - spark
   - device-orch-360
 spec:
-  runAsUser: "sgali1"
+  runAsUser: "sgali1_lenovocomextrubikdatasolutionsonmicrosoftcom"
   compute: lnv-compute
   engine: spark
   repo:
