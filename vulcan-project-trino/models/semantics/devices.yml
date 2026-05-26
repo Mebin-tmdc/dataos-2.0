@@ -222,16 +222,6 @@ dimensions:
     terms:
       - device.status
       - inventory.device_state
-  - name: registration_type
-    description: Registration type attribute for the devices semantic model.
-    tags:
-      - devices
-      - classification
-      - type
-    terms:
-      - devices.registration_type
-      - classification.registration_type
-
 measures:
   - name: total_devices
     type: count_distinct

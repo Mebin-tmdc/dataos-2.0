@@ -7,7 +7,7 @@ description: Device hardware and software issue diagnostics (semantic layer)
 ai_context:
   instructions: >
     Device diagnostic issues dimension. Use for tracking open, resolved, and ticketed issues per device.
-    Join to battery for battery-related issue correlation.
+    Join to devices for device inventory and classification context.
     Member names use semantic_model.member form (e.g. issues.status).
   synonyms:
     - device issues
@@ -317,6 +317,6 @@ segments:
       - health.ticketed_issues
 
 joins:
-  - name: battery
+  - name: devices
     type: many_to_one
-    expression: "{issues.device_id} = {battery.battery_id}"
+    expression: "{issues.device_id} = {devices.device_id}"
