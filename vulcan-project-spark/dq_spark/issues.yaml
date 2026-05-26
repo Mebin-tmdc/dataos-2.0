@@ -1,6 +1,6 @@
 kind: dq
 name: issues_dq
-depends_on: s3depot.device_08.issues
+depends_on: s3depot.device_meb.issues
 
 rules:
   - row_count > 0:
@@ -22,7 +22,7 @@ rules:
       name: resolved_after_reported
       dimension: validity
       fail query: |
-        SELECT * FROM s3depot.device_08.issues
+        SELECT * FROM s3depot.device_meb.issues
         WHERE resolved_at < reported_at
           AND resolved_at IS NOT NULL
           AND reported_at IS NOT NULL

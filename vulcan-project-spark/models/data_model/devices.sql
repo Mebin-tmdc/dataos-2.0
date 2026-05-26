@@ -1,5 +1,5 @@
 MODEL (
-  name s3depot.device_08.devices,
+  name s3depot.device_meb.devices,
   grain id,    
   cron '*/30 * * * *',
   kind FULL,
