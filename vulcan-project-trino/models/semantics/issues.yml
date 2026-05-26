@@ -315,8 +315,3 @@ segments:
     terms:
       - issue.ticketed
       - health.ticketed_issues
-
-joins:
-  - name: devices
-    type: many_to_one
-    expression: "{issues.device_id} = {devices.device_id}"
