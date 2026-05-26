@@ -1,6 +1,6 @@
 version: v1alpha
 type: vulcan
-name: device360cadp
+name: devicecadpmeb
 spec:
   runAsUser: mebinmoncytmdcio
   compute: lnv-compute
