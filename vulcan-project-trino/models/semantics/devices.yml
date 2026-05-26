@@ -1,0 +1,420 @@
+# Converted from legacy: semantics/devices.yml (physical model is s3depot.device_cadp.devices)
+kind: semantic
+name: devices
+depends_on: s3depot.device_cadp.devices
+description: Device inventory, classification, and fleet overview (semantic layer)
+
+ai_context:
+  instructions: >
+    Core device dimension. Use for fleet inventory, category breakdowns, and device lifecycle analysis.
+    Join to battery, storage, issues, device_warranty, consumed_licenses, system_update_report, or system_update_testing for enriched views.
+    Member names use semantic_model.member form (e.g. devices.device_category).
+  synonyms:
+    - device fleet
+    - device inventory
+    - managed devices
+    - endpoints
+dimensions:
+  - name: id
+    description: Primary source identifier for the semantic model record.
+    tags:
+      - devices
+      - identifier
+      - key
+    terms:
+      - devices.id
+      - identifier.id
+  - name: device_id
+    description: Business identifier for the associated device.
+    tags:
+      - devices
+      - device
+      - identifier
+    terms:
+      - devices.device_id
+      - device.device_id
+  - name: org_id
+    description: Organization identifier used to scope the record.
+    tags:
+      - devices
+      - organization
+      - identifier
+    terms:
+      - devices.org_id
+      - organization.org_id
+  - name: serial_number
+    description: Device serial number used for inventory matching.
+    tags:
+      - devices
+      - device
+      - identifier
+    terms:
+      - devices.serial_number
+      - device.serial_number
+  - name: model_type
+    description: Model type attribute for the devices semantic model.
+    tags:
+      - devices
+      - classification
+      - type
+    terms:
+      - devices.model_type
+      - classification.model_type
+  - name: family
+    description: Family attribute for the devices semantic model.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.family
+      - dimension.family
+  - name: manufacturer
+    description: Manufacturer attribute for the devices semantic model.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.manufacturer
+      - dimension.manufacturer
+  - name: created_at
+    description: Timestamp when the device record was created
+    ai_context:
+      instructions: Use as the time axis for device registration trends and cohort analysis.
+      synonyms:
+        - registration date
+        - enrollment date
+        - device created
+    tags:
+      - device
+      - temporal
+      - registration
+    terms:
+      - device.created_at
+      - temporal.registration_date
+  - name: updated_at
+    description: Timestamp when the record was last updated.
+    tags:
+      - devices
+      - temporal
+      - date
+    terms:
+      - devices.updated_at
+      - temporal.updated_at
+  - name: is_active
+    description: Flag indicating whether the record is currently active.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.is_active
+      - dimension.is_active
+  - name: category
+    description: Category attribute for the devices semantic model.
+    tags:
+      - devices
+      - classification
+      - category
+    terms:
+      - devices.category
+      - classification.category
+  - name: device_category
+    description: Standardized device category (PC, Mobile/Tablet, AR/VR, SmartEdge, Chromebook, etc.)
+    ai_context:
+      instructions: Primary classification dimension for fleet segmentation. Values are PC, Mobile/Tablet, AR/VR, SmartEdge, Chromebook.
+      synonyms:
+        - device type
+        - device class
+        - form factor
+    tags:
+      - device
+      - classification
+      - segment
+    terms:
+      - device.category
+      - inventory.device_type
+  - name: model_name
+    description: Model name attribute for the devices semantic model.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.model_name
+      - dimension.model_name
+  - name: trust_anchor
+    description: Trust anchor attribute for the devices semantic model.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.trust_anchor
+      - dimension.trust_anchor
+  - name: platform
+    description: Platform attribute for the devices semantic model.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.platform
+      - dimension.platform
+  - name: org_device_id
+    description: Org device id attribute for the devices semantic model.
+    tags:
+      - devices
+      - organization
+      - identifier
+    terms:
+      - devices.org_device_id
+      - organization.org_device_id
+  - name: subscription_id
+    description: Subscription identifier associated with the record.
+    tags:
+      - devices
+      - subscription
+      - identifier
+    terms:
+      - devices.subscription_id
+      - subscription.subscription_id
+  - name: name
+    description: Human-readable name for the record.
+    tags:
+      - devices
+      - dimension
+      - attribute
+    terms:
+      - devices.name
+      - dimension.name
+  - name: _nilus_load_id
+    description: Ingestion load identifier from the source pipeline.
+    tags:
+      - devices
+      - identifier
+      - key
+    terms:
+      - devices._nilus_load_id
+      - identifier._nilus_load_id
+  - name: _nilus_id
+    description: Ingestion record identifier from the source pipeline.
+    tags:
+      - devices
+      - identifier
+      - key
+    terms:
+      - devices._nilus_id
+      - identifier._nilus_id
+  - name: status
+    description: Current operational status of the device
+    ai_context:
+      instructions: Use to filter active vs. inactive devices. Combine with device_category for health-by-segment views.
+      synonyms:
+        - device state
+        - operational status
+        - device lifecycle state
+    tags:
+      - device
+      - status
+      - lifecycle
+    terms:
+      - device.status
+      - inventory.device_state
+measures:
+  - name: total_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    description: Total number of unique devices in the fleet
+    ai_context:
+      instructions: Headline fleet size metric. Break down by device_category, platform, or manufacturer for segmentation.
+      synonyms:
+        - device count
+        - fleet size
+        - total endpoints
+    tags:
+      - device
+      - inventory
+      - count
+    terms:
+      - device.total_count
+      - inventory.device_count
+
+  - name: total_device_categories
+    type: count_distinct
+    expression: "{devices.device_category}"
+    description: Total number of distinct device categories
+    tags:
+      - device
+      - classification
+      - count
+    terms:
+      - device.category_count
+      - inventory.category_diversity
+
+  - name: total_pc_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    filters:
+      - "{devices.device_category} = 'PC'"
+    description: Total number of PC category devices
+    tags:
+      - device
+      - pc
+      - count
+    terms:
+      - device.pc_count
+      - inventory.pc_devices
+
+  - name: total_devices_with_soon_expiring_warranty
+    type: count_distinct
+    expression: "{device_warranty.device_id}"
+    filters:
+      - "{device_warranty.warranty_end} > CURRENT_TIMESTAMP"
+      - "{device_warranty.warranty_end} < DATE_ADD('DAY', 60, CURRENT_TIMESTAMP)"
+    description: Total number of devices with warranties expiring within 60 days
+    ai_context:
+      instructions: Requires join to device_warranty. Use for proactive warranty renewal workflows.
+      synonyms:
+        - devices with expiring warranty
+        - near-expiry warranty devices
+    tags:
+      - warranty
+      - expiring_soon
+      - device
+    terms:
+      - warranty.expiring_soon_device_count
+      - device_lifecycle.soon_expiring_warranty_devices
+
+  - name: total_mobile_and_tablet_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    filters:
+      - "{devices.device_category} = 'Mobile/Tablet'"
+    description: Total number of Mobile and Tablet devices
+    tags:
+      - device
+      - mobile
+      - count
+    terms:
+      - device.mobile_count
+      - inventory.mobile_devices
+
+  - name: total_ar_and_vr_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    filters:
+      - "{devices.device_category} = 'AR/VR'"
+    description: Total number of AR and VR devices
+    tags:
+      - device
+      - arvr
+      - count
+    terms:
+      - device.arvr_count
+      - inventory.arvr_devices
+
+  - name: total_smartedge_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    filters:
+      - "{devices.device_category} = 'SmartEdge'"
+    description: Total number of SmartEdge devices
+    tags:
+      - device
+      - smartedge
+      - count
+    terms:
+      - device.smartedge_count
+      - inventory.smartedge_devices
+
+  - name: total_chromebook_devices
+    type: count_distinct
+    expression: "{devices.id}"
+    filters:
+      - "{devices.device_category} = 'Chromebook'"
+    description: Total number of Chromebook devices
+    tags:
+      - device
+      - chromebook
+      - count
+    terms:
+      - device.chromebook_count
+      - inventory.chromebook_devices
+
+segments:
+  - name: pc_devices
+    expression: "{devices.device_category} = 'PC'"
+    description: Devices in the PC category
+    ai_context:
+      instructions: >
+        SQL API: `pc_devices IS TRUE`. REST API: `"segments": ["devices.pc_devices"]`.
+        Use to scope all fleet metrics to PC-form-factor devices.
+      synonyms:
+        - PC segment
+        - laptops and desktops
+    tags:
+      - device
+      - pc
+      - category
+    terms:
+      - device.pc
+      - inventory.pc_segment
+
+  - name: mobile_and_tablet_devices
+    expression: "{devices.device_category} = 'Mobile/Tablet'"
+    description: Devices in the Mobile/Tablet category
+    ai_context:
+      instructions: >
+        SQL API: `mobile_and_tablet_devices IS TRUE`. REST API: `"segments": ["devices.mobile_and_tablet_devices"]`.
+      synonyms:
+        - mobile devices
+        - tablet segment
+    tags:
+      - device
+      - mobile
+      - category
+    terms:
+      - device.mobile
+      - inventory.mobile_segment
+
+  - name: active_devices
+    expression: "{devices.is_active} = true"
+    description: Currently active devices in the fleet
+    ai_context:
+      instructions: >
+        SQL API: `active_devices IS TRUE`. REST API: `"segments": ["devices.active_devices"]`.
+        Use as a default filter for any fleet operational dashboard to exclude retired devices.
+      synonyms:
+        - live devices
+        - enrolled devices
+    tags:
+      - device
+      - active
+      - status
+    terms:
+      - device.active
+      - inventory.active_devices
+
+joins:
+
+  - name: device_warranty
+    type: one_to_many
+    expression: "{devices.device_id} = {device_warranty.device_id} AND {devices.org_id} = {device_warranty.org_id}"
+    ai_context:
+      instructions: Join to device_warranty for warranty coverage, expiration, and lifecycle metrics.
+      synonyms:
+        - warranty join
+        - device coverage
+
+  - name: issues
+    type: one_to_many
+    expression: "{devices.device_id} = {issues.device_id}"
+    ai_context:
+      instructions: Join to issues for diagnostic issue counts, categories, and resolution metrics per device.
+      synonyms:
+        - diagnostics join
+        - device issues
+
+

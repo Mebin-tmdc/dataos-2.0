@@ -1,0 +1,45 @@
+name: devicesadpsri
+display_name: Device Orch 360 from Sri (SADP)
+description: "Device Orch 360 Source Aligned Data Product (SADP) created by Sri."
+discoverable: true
+version: 0.0.1
+domain: LDO
+alignment: source_aligned
+model_defaults:
+  dialect: spark2
+  start: '2026-01-01'
+  cron: '*/30 * * * *'
+tags:
+  - spark
+  - device-360-sadp
+  - device-360-usecases
+  - device-insights-360
+
+terms:
+  - glossary.data_product
+  - device-insights-360
+  - device-insights-usecases
+linter:
+  enabled: false
+  # warn_rules:
+  #   - preferassertions
+  #   - nomissingaudits
+
+gateways:
+  default:
+    connection:
+      type: depot
+      address: dataos://s3depot
+      # config:
+      #   spark.dynamicAllocation.enabled: "true"
+      #   spark.dynamicAllocation.shuffleTracking.enabled: "true"
+      #   spark.dynamicAllocation.initialExecutors: "1"
+      #   spark.dynamicAllocation.minExecutors: "1"
+      #   spark.dynamicAllocation.maxExecutors: "2"
+ 
+
+
+users:
+  - username: sgali1
+    email: sgali1@lenovo.com
+    type: OWNER

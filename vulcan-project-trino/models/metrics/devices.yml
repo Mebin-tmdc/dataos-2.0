@@ -1,0 +1,10 @@
+kind: metric
+name: total_devices                         # Unique metric name
+measure: devices.total_devices     # Which measure to calculate
+ts: devices.created_at           # Time column for time-series analysis
+granularity: day                  # Default time bucket
+
+dimensions:                                 # Optional list of grouping dimensions  
+  - devices.device_category           # Bare reference: name auto-derived from <column_name>
+  - name: serial_number
+    ref: devices.serial_number

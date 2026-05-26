@@ -1,0 +1,92 @@
+
+- name: '"s3depot"."demolake04"."issues"'
+  columns:
+    uuid: VARCHAR
+    bucket_id: VARCHAR
+    category: VARCHAR
+    hardware_id: VARCHAR
+    reported_at: VARCHAR
+    resolved_at: VARCHAR
+    status: VARCHAR
+    timeline: VARCHAR
+    updated_at: VARCHAR
+    value: VARCHAR
+    d_id: VARCHAR
+    insight_id: VARCHAR
+    generate_ticket: BOOLEAN
+    has_ticket: BOOLEAN
+    hidden: BOOLEAN
+    insight_item_id: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR
+    b_id: VARCHAR
+    predicted_to_occur_on: VARCHAR
+    code: VARCHAR
+    s_id: VARCHAR
+    details: VARCHAR
+
+- name: '"s3depot"."demolake04"."devices"'
+  columns:
+    id: VARCHAR
+    device_id: VARCHAR
+    org_id: VARCHAR
+    serial_number: VARCHAR
+    model_type: VARCHAR
+    family: VARCHAR
+    manufacturer: VARCHAR
+    created_at: VARCHAR
+    updated_at: VARCHAR
+    is_active: BOOLEAN
+    category: VARCHAR
+    model_name: VARCHAR
+    trust_anchor: VARCHAR
+    platform: VARCHAR
+    org_device_id: VARCHAR
+    subscription_id: VARCHAR
+    name: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR
+    registration_type: VARCHAR
+
+- name: '"s3depot"."demolake04"."device_warranty"'
+  columns:
+    _id: VARCHAR
+    org_id: VARCHAR
+    device_id: VARCHAR
+    device_name: VARCHAR
+    serial_number: VARCHAR
+    device_category: VARCHAR
+    created_at: VARCHAR
+    last_updated: VARCHAR
+    warranty_id: VARCHAR
+    warranty_number: VARCHAR
+    warranty_type: VARCHAR
+    warranty_start: VARCHAR
+    warranty_end: VARCHAR
+    warranty_name: VARCHAR
+    warranty_category: VARCHAR
+    warranty_delivery_type: VARCHAR
+    warranty_description: VARCHAR
+    warranty_duration: VARCHAR
+    warranty_service_profile: VARCHAR
+    warranty_response_profile: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR
+
+- name: '"s3depot"."demolake04"."battery"'
+  columns:
+    battery_id: VARCHAR
+    device_id: VARCHAR
+    battery_condition: VARCHAR
+    battery_cycle_count: VARCHAR
+    battery_design_capacity: VARCHAR
+    battery_firstused_date: VARCHAR
+    battery_fullcharge_capacity: VARCHAR
+    battery_manufacture_date: VARCHAR
+    battery_manufacture_name: VARCHAR
+    battery_remaining_capacity: VARCHAR
+    battery_serial_number: VARCHAR
+    battery_warranty_date: VARCHAR
+    battery_warranty_status: VARCHAR
+    _nilus_load_id: VARCHAR
+    _nilus_id: VARCHAR

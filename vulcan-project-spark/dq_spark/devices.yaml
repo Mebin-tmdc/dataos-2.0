@@ -1,0 +1,28 @@
+kind: dq
+name: devices_dq
+depends_on: s3depot.device_meb.devices
+
+rules:
+  - row_count > 0:
+      name: has_rows
+      dimension: completeness
+      description: "Devices table must have at least one row"
+
+  - missing_count(serial_number) = 0:
+      name: no_missing_serial_number
+      dimension: completeness
+      description: "Every device must have a serial number"
+
+  - duplicate_count(device_id) = 0:
+      name: unique_device_ids
+      dimension: uniqueness
+      description: "Device IDs must be unique"
+
+  - failed rows:
+      name: valid_device_category
+      dimension: validity
+      fail query: |
+        SELECT * FROM s3depot.device_meb.devices
+        WHERE device_category NOT IN ('PC', 'Mobile/Tablet', 'AR/VR', 'SmartEdge', 'Chromebook')
+          AND device_category IS NOT NULL
+      description: "Device category must be from the valid set"
