@@ -6,6 +6,5 @@ granularity: day                  # Default time bucket
 
 dimensions:                                 # Optional list of grouping dimensions  
   - devices.device_category           # Bare reference: name auto-derived from <column_name>
-  - name: device_category                      # Named slice: explicit name + ref (+ optional metadata)
-    ref: devices.device_category
-
+  - name: serial_number
+    ref: devices.serial_number
