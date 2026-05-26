@@ -30,8 +30,8 @@ MODEL (
     name STRING,
     _nilus_load_id STRING,
     _nilus_id STRING,
-    status STRING,
-    registration_type STRING
+    status STRING
+    -- registration_type STRING
   ),
   column_descriptions (
     id = 'Unique device record identifier and model grain.',
@@ -54,8 +54,8 @@ MODEL (
     name = 'Display name of the device.',
     _nilus_load_id = 'Ingestion load identifier assigned by Nilus.',
     _nilus_id = 'Ingestion record identifier assigned by Nilus.',
-    status = 'Device status value reserved by the source-aligned model.',
-    registration_type = 'Registration type associated with the device.'
+    status = 'Device status value reserved by the source-aligned model.'
+    -- registration_type = 'Registration type associated with the device.'
   ),
   column_tags (
     id = ('identifier', 'primary_key', 'grain', 'device'),
@@ -78,8 +78,8 @@ MODEL (
     name = ('dimension', 'device', 'display-name'),
     _nilus_load_id = ('metadata', 'ingestion', 'load_id'),
     _nilus_id = ('metadata', 'ingestion', 'record_id'),
-    status = ('status', 'device', 'lifecycle'),
-    registration_type = ('classification', 'device', 'registration')
+    status = ('status', 'device', 'lifecycle')
+    -- registration_type = ('classification', 'device', 'registration')
   ),
   column_terms (
     id = ('devices.record_id', 'identity.primary_key'),
@@ -102,8 +102,8 @@ MODEL (
     name = ('devices.device_name', 'device.display_name'),
     _nilus_load_id = ('devices.load_id', 'ingestion.load_id'),
     _nilus_id = ('devices.nilus_id', 'ingestion.record_id'),
-    status = ('devices.status', 'device.status'),
-    registration_type = ('devices.registration_type', 'device.registration_type')
+    status = ('devices.status', 'device.status')
+    -- registration_type = ('devices.registration_type', 'device.registration_type')
   )
 );
 
@@ -136,8 +136,8 @@ SELECT
     name,
     _nilus_load_id,
     _nilus_id,
-    CAST(null AS STRING) as status,
-    registration_type
+    CAST(null AS STRING) as status
+    -- registration_type
 FROM (
     SELECT
         id,
@@ -159,7 +159,7 @@ FROM (
         name,
         _nilus_load_id,
         _nilus_id,
-        registration_type,
+        -- registration_type,
         ROW_NUMBER() OVER (
             PARTITION BY id
             ORDER BY CAST(_nilus_load_id AS BIGINT) DESC
