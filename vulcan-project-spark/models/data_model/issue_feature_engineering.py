@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import OrdinalEncoder, PolynomialFeatures, StandardScaler
 from vulcan import ExecutionContext, ModelKindName, model
 
 
@@ -125,36 +124,7 @@ def execute(
         "avg_cpu_usage_30d",
     ]
 
-    scaler = StandardScaler()
-    scaled = scaler.fit_transform(feature_df[numeric_cols])
-    scaled_df = pd.DataFrame(scaled, columns=[f"z_{c}" for c in numeric_cols], index=feature_df.index)
-
-    poly_input_cols = ["issues_7d", "open_issues_30d", "days_since_last_issue"]
-    poly = PolynomialFeatures(degree=2, include_bias=False)
-    poly_values = poly.fit_transform(feature_df[poly_input_cols])
-    poly_df = pd.DataFrame(
-        poly_values,
-        columns=[
-            "poly_issues_7d",
-            "poly_open_issues_30d",
-            "poly_days_since_last_issue",
-            "poly_issues_7d_pow2",
-            "poly_issues_7d_x_open_issues_30d",
-            "poly_issues_7d_x_days_since_last_issue",
-            "poly_open_issues_30d_pow2",
-            "poly_open_issues_30d_x_days_since_last_issue",
-            "poly_days_since_last_issue_pow2",
-        ],
-        index=feature_df.index,
-    )
-
-    encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
-    encoded = encoder.fit_transform(feature_df[["device_category", "manufacturer"]])
-    encoded_df = pd.DataFrame(
-        encoded,
-        columns=["enc_device_category", "enc_manufacturer"],
-        index=feature_df.index,
-    ).astype("int64")
+    scaled_df, poly_df, encoded_df = _build_features_with_sklearn_or_fallback(feature_df, numeric_cols)
 
     result_df = pd.concat([feature_df, scaled_df, poly_df, encoded_df], axis=1)
 
@@ -206,3 +176,73 @@ def execute(
     result_df = result_df.sort_values(by="device_id", kind="stable")
 
     yield result_df
+
+
+def _build_features_with_sklearn_or_fallback(
+    feature_df: pd.DataFrame,
+    numeric_cols: t.List[str],
+) -> t.Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    poly_input_cols = ["issues_7d", "open_issues_30d", "days_since_last_issue"]
+    poly_columns = [
+        "poly_issues_7d",
+        "poly_open_issues_30d",
+        "poly_days_since_last_issue",
+        "poly_issues_7d_pow2",
+        "poly_issues_7d_x_open_issues_30d",
+        "poly_issues_7d_x_days_since_last_issue",
+        "poly_open_issues_30d_pow2",
+        "poly_open_issues_30d_x_days_since_last_issue",
+        "poly_days_since_last_issue_pow2",
+    ]
+
+    try:
+        from sklearn.preprocessing import OrdinalEncoder, PolynomialFeatures, StandardScaler
+
+        scaler = StandardScaler()
+        scaled = scaler.fit_transform(feature_df[numeric_cols])
+        scaled_df = pd.DataFrame(scaled, columns=[f"z_{c}" for c in numeric_cols], index=feature_df.index)
+
+        poly = PolynomialFeatures(degree=2, include_bias=False)
+        poly_values = poly.fit_transform(feature_df[poly_input_cols])
+        poly_df = pd.DataFrame(poly_values, columns=poly_columns, index=feature_df.index)
+
+        encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
+        encoded = encoder.fit_transform(feature_df[["device_category", "manufacturer"]])
+        encoded_df = pd.DataFrame(
+            encoded,
+            columns=["enc_device_category", "enc_manufacturer"],
+            index=feature_df.index,
+        ).astype("int64")
+        return scaled_df, poly_df, encoded_df
+    except Exception:
+        # Keep model runnable even when sklearn wheels are missing.
+        scaled = feature_df[numeric_cols].astype(float)
+        std = scaled.std(ddof=0).replace(0.0, 1.0)
+        mean = scaled.mean()
+        scaled_df = (scaled - mean).div(std)
+        scaled_df.columns = [f"z_{c}" for c in numeric_cols]
+
+        p = feature_df[poly_input_cols].astype(float)
+        poly_df = pd.DataFrame(
+            {
+                "poly_issues_7d": p["issues_7d"],
+                "poly_open_issues_30d": p["open_issues_30d"],
+                "poly_days_since_last_issue": p["days_since_last_issue"],
+                "poly_issues_7d_pow2": p["issues_7d"] * p["issues_7d"],
+                "poly_issues_7d_x_open_issues_30d": p["issues_7d"] * p["open_issues_30d"],
+                "poly_issues_7d_x_days_since_last_issue": p["issues_7d"] * p["days_since_last_issue"],
+                "poly_open_issues_30d_pow2": p["open_issues_30d"] * p["open_issues_30d"],
+                "poly_open_issues_30d_x_days_since_last_issue": p["open_issues_30d"] * p["days_since_last_issue"],
+                "poly_days_since_last_issue_pow2": p["days_since_last_issue"] * p["days_since_last_issue"],
+            },
+            index=feature_df.index,
+        )
+
+        encoded_df = pd.DataFrame(index=feature_df.index)
+        encoded_df["enc_device_category"] = (
+            feature_df["device_category"].astype("category").cat.codes.astype("int64")
+        )
+        encoded_df["enc_manufacturer"] = (
+            feature_df["manufacturer"].astype("category").cat.codes.astype("int64")
+        )
+        return scaled_df, poly_df, encoded_df
