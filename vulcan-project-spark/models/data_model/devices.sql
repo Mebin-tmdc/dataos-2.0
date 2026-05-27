@@ -98,7 +98,6 @@ MODEL (
 );
 
 
-
 SELECT
     id,
     device_id,
