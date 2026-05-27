@@ -65,7 +65,7 @@ def execute(
         i.avg_cpu_usage
     FROM s3depot.device_meb.issues i
     LEFT JOIN s3depot.device_meb.devices d
-      ON i.device_id = d.id OR i.device_id = d.device_id
+      ON i.device_id = d.id OR i.device_id = d.device_id limit 100000
     """
     df = context.fetchdf(query)
 
