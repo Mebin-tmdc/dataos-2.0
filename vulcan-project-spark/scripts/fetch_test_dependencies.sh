@@ -44,12 +44,4 @@ echo "Fetching Linux cp${TARGET_PYTHON} wheels for scikit-learn stack -> ${PY_DI
   "joblib==1.4.2" \
   "threadpoolctl==3.5.0"
 
-echo "Fetching python-slugify wheel -> ${PY_DIR}/"
-rm -f "${PY_DIR}"/python?slugify-*.whl 2>/dev/null || true
-"${PYTHON_BIN}" -m pip download "python-slugify==8.0.4" -d "${PY_DIR}" --no-deps --only-binary=:all:
-
-echo "Fetching text-unidecode wheel -> ${PY_DIR}/ (runtime dependency of slugify)"
-rm -f "${PY_DIR}"/text?unidecode-*.whl 2>/dev/null || true
-"${PYTHON_BIN}" -m pip download "text-unidecode==1.3" -d "${PY_DIR}" --no-deps --only-binary=:all:
-
 echo "Done."

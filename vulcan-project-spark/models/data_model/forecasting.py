@@ -113,8 +113,6 @@ def execute(
     FROM s3depot.device_meb.issues i
     LEFT JOIN s3depot.device_meb.devices d
         ON (i.device_id = d.id OR i.device_id = d.device_id)
-    WHERE i.reported_at IS NOT NULL
-        AND (d.is_active = true OR d.is_active IS NULL)
     """
 
     df = context.fetchdf(issues_query)

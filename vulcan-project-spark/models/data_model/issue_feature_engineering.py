@@ -66,8 +66,6 @@ def execute(
     FROM s3depot.device_meb.issues i
     LEFT JOIN s3depot.device_meb.devices d
       ON i.device_id = d.id OR i.device_id = d.device_id
-    WHERE i.reported_at IS NOT NULL
-      AND COALESCE(i.device_id, d.id, d.device_id) IS NOT NULL
     """
     df = context.fetchdf(query)
 
