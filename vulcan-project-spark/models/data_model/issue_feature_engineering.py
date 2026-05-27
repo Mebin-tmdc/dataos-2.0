@@ -1,5 +1,5 @@
 import typing as t
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -7,7 +7,7 @@ from vulcan import ExecutionContext, ModelKindName, model
 
 
 @model(
-    "s3depot.device_meb.device_issue_features",
+    "s3depot.device_meb.device_issue_features1",
     columns={
         "snapshot_date": "timestamp",
         "device_id": "string",
@@ -74,10 +74,7 @@ def execute(
         return
 
     df["reported_at"] = pd.to_datetime(df["reported_at"], errors="coerce")
-    df = df.dropna(subset=["reported_at", "device_id"]).copy()
-    if df.empty:
-        yield from ()
-        return
+    df["device_id"] = df["device_id"].astype(str)
 
     df["status"] = df["status"].astype(str).str.lower()
     df["avg_cpu_usage"] = pd.to_numeric(df["avg_cpu_usage"], errors="coerce").fillna(0.0)
@@ -85,7 +82,7 @@ def execute(
     df["manufacturer"] = df["manufacturer"].fillna("Unknown")
 
     snapshot_date = pd.Timestamp(execution_time.date())
-    windows = {"7d": 7, "30d": 30, "90d": 90}
+    windows = ["7d", "30d", "90d"]
 
     rows: t.List[t.Dict[str, t.Any]] = []
     for device_id, group in df.groupby("device_id", dropna=False):
@@ -96,16 +93,18 @@ def execute(
             "manufacturer": str(group["manufacturer"].iloc[-1]),
         }
 
-        for label, days in windows.items():
-            cutoff = snapshot_date - timedelta(days=days)
-            recent = group[group["reported_at"] >= cutoff]
+        for label in windows:
+            recent = group
             row[f"issues_{label}"] = int(len(recent))
             if label == "30d":
-                row["open_issues_30d"] = int(recent["status"].isin(["open", "new", "in_progress"]).sum())
+                row["open_issues_30d"] = int(len(recent))
                 row["avg_cpu_usage_30d"] = float(recent["avg_cpu_usage"].mean()) if len(recent) else 0.0
 
         last_issue = group["reported_at"].max()
-        row["days_since_last_issue"] = int(max((snapshot_date - last_issue).days, 0))
+        if pd.isna(last_issue):
+            row["days_since_last_issue"] = 0
+        else:
+            row["days_since_last_issue"] = int(max((snapshot_date - last_issue).days, 0))
         rows.append(row)
 
     feature_df = pd.DataFrame(rows)

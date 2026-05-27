@@ -6,7 +6,7 @@ from vulcan import ExecutionContext, ModelKindName, model
 
 
 @model(
-    "s3depot.device_meb.device_issue_ml_workflow",
+    "s3depot.device_meb.device_issue_ml_workflow1",
     columns={
         "snapshot_date": "timestamp",
         "device_id": "string",
@@ -18,7 +18,7 @@ from vulcan import ExecutionContext, ModelKindName, model
     },
     kind=dict(name=ModelKindName.FULL),
     grains=["snapshot_date", "device_id"],
-    depends_on=["s3depot.device_meb.device_issue_features"],
+    depends_on=["s3depot.device_meb.device_issue_features1"],
     cron="@daily",
     tags=["ml", "workflow", "spark-ml", "sklearn-fallback"],
     description="Simple ML workflow over engineered issue features using Spark ML KMeans with sklearn fallback.",
