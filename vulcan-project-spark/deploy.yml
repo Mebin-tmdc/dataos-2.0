@@ -1,17 +1,17 @@
 version: v1alpha
 type: vulcan
-name: devicesadpmeb
+name: devicesadpmithun
 tags:
   - spark
   - device-orch-360
 spec:
-  runAsUser: "mebinmoncytmdcio"
+  runAsUser: "kmithun_lenovocomextrubikdatasolutionsonmicrosoftcom"
   compute: lnv-compute
   engine: spark
   repo:
     url: https://github.com/Mebin-tmdc/dataos-2.0
     syncFlags:
-      - "--ref=main"
+      - "--ref=kmithun"
       - "--submodules=off"
     baseDir: dataos-2.0/vulcan-project-spark
     secret: sandbox:git-sync
