@@ -51,9 +51,11 @@ spec:
     sparkConf:
       spark.driver.memory: "8g"
       spark.driver.cores: "2"
+      # spark.driver.extraClassPath: "/etc/dataos/work/dataos-2.0/vulcan-project-spark/dependencies/java/*"
       spark.driver.memoryOverhead: "1g"
       spark.executor.memory: "12g"
       spark.executor.cores: "2"
+      # spark.executor.extraClassPath: "/etc/dataos/work/dataos-2.0/vulcan-project-spark/dependencies/java/*"
       spark.executor.memoryOverhead: "1g"
       spark.sql.shuffle.partitions: "200"
       spark.sql.adaptive.enabled: "true"
@@ -72,18 +74,23 @@ spec:
     replicas: 2
     logLevel: INFO
     resource:
-      request:
-        cpu: "200m"
-        memory: "512Mi"
-      limit:
-        cpu: "2000m"
-        memory: "2Gi"
+      driver:
+        coreLimit: "2000m"
+        cores: 2
+        memory: "4g"
+      executor:
+        coreLimit: "2000m"
+        cores: 2
+        memory: "8g"
+        instances: 4
     sparkConf:
       spark.driver.memory: "8g"
       spark.driver.cores: "2"
+      # spark.driver.extraClassPath: "/etc/dataos/work/dataos-2.0/vulcan-project-spark/dependencies/java/*"
       spark.driver.memoryOverhead: "1g"
       spark.executor.memory: "12g"
       spark.executor.cores: "2"
+      # spark.executor.extraClassPath: "/etc/dataos/work/dataos-2.0/vulcan-project-spark/dependencies/java/*"
       spark.executor.memoryOverhead: "1g"
       spark.sql.shuffle.partitions: "200"
       spark.sql.adaptive.enabled: "true"

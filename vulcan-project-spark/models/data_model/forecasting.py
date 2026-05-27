@@ -72,20 +72,6 @@ from vulcan import ModelKindName
         "days_ahead": ["device_issue_forecast.days_ahead", "forecast.horizon_days"],
         "model_version": ["device_issue_forecast.model_version", "ml.model_version"],
     },
-    profiles=[
-        "forecast_date",
-        "device_id",
-        "device_category",
-        "model_type",
-        "manufacturer",
-        "category",
-        "predicted_issues",
-        "confidence_lower",
-        "confidence_upper",
-        "trend_direction",
-        "days_ahead",
-        "model_version",
-    ],
 )
 def execute(
     context: ExecutionContext,
@@ -113,8 +99,6 @@ def execute(
     FROM s3depot.device_pari.issues i
     LEFT JOIN s3depot.device_pari.devices d
         ON (i.device_id = d.id OR i.device_id = d.device_id)
-    WHERE i.reported_at IS NOT NULL
-        AND (d.is_active = true OR d.is_active IS NULL)
     """
 
     df = context.fetchdf(issues_query)
