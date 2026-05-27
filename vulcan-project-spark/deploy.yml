@@ -5,7 +5,7 @@ tags:
   - spark
   - device-orch-360
 spec:
-  runAsUser: "mebinmoncytmdcio"
+  runAsUser: "kkamutala_lenovocomextrubikdatasolutionsonmicrosoftcom"
   compute: lnv-compute
   engine: spark
   repo:
