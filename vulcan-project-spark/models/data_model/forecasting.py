@@ -72,20 +72,6 @@ from vulcan import ModelKindName
         "days_ahead": ["device_issue_forecast.days_ahead", "forecast.horizon_days"],
         "model_version": ["device_issue_forecast.model_version", "ml.model_version"],
     },
-    profiles=[
-        "forecast_date",
-        "device_id",
-        "device_category",
-        "model_type",
-        "manufacturer",
-        "category",
-        "predicted_issues",
-        "confidence_lower",
-        "confidence_upper",
-        "trend_direction",
-        "days_ahead",
-        "model_version",
-    ],
 )
 def execute(
     context: ExecutionContext,
