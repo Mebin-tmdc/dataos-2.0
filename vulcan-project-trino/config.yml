@@ -3,7 +3,7 @@ display_name: Device Orch 360 Consumer Aligned Data Product (CADP)
 description: "Device Orch 360 Consumer Aligned Data Product (CADP)"
 discoverable: true
 version: 0.0.1
-# domain: LDO
+domain: LDO
 alignment: consumer_aligned
 model_defaults:
   dialect: trino
