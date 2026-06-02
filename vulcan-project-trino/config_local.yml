@@ -25,24 +25,23 @@ gateways:
       type: trino
       host: "tcp.lnv-051826.dataos.cloud"
       port: 7432
-      user: "sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com"
+      user: "sgali1"
       catalog: "s3depot"
       http_scheme: https
       method: basic
-      #password: ""
-      password: "{{ env_var('TRINO_PASSWORD', '') }}"
+      password: "12345678"
       verify: true
-#     state_connection:
-#       type: duckdb
-#       database: ./statestore.duckdb
-# transpiler:
-#   base_url: "https://lnv-051826.dataos.cloud/transpiler"
-#   timeout: 100
-#   token: 
+    state_connection:
+      type: duckdb
+      database: ./statestore.duckdb
+transpiler:
+  base_url: "https://lnv-051826.dataos.cloud/transpiler"
+  timeout: 100
+  token: 
 
 users:
-  - username: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
-    email: sgali1@lenovo.com
+  - username: mebinmoncytmdcio
+    email: mebin.moncy@tmdc.io
     type: OWNER
 
  

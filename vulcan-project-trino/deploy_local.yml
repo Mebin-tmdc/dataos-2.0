@@ -29,16 +29,15 @@ gateways:
       catalog: "s3depot"
       http_scheme: https
       method: basic
-      #password: ""
-      password: "{{ env_var('TRINO_PASSWORD', '') }}"
+      password: "eyJjbHVzdGVyIjogIm1pbmVydmFpbmZpbml0eSIsICJhcGlrZXkiOiAiZEdWdGNGOTBiMnRsYmk1ak5qSTBOVFZpT1MxbVptTXlMVFJoWldZdFltSTVNaTAwWXpBek5XWm1NRGt4TVRNeU1ERTFaRGN5TkRjek9HWTJNemRsTURJM01tSXhZamxoTURrMk1tTTFNUT09IiwgInRlbmFudCI6ICJzYW5kYm94In0="
       verify: true
-#     state_connection:
-#       type: duckdb
-#       database: ./statestore.duckdb
-# transpiler:
-#   base_url: "https://lnv-051826.dataos.cloud/transpiler"
-#   timeout: 100
-#   token: 
+    state_connection:
+      type: duckdb
+      database: ./statestore.duckdb
+transpiler:
+  base_url: "https://lnv-051826.dataos.cloud/transpiler"
+  timeout: 100
+  token: dGVtcF90b2tlbi5jNjI0NTViOS1mZmMyLTRhZWYtYmI5Mi00YzAzNWZmMDkxMTMyMDE1ZDcyNDczOGY2MzdlMDI3MmIxYjlhMDk2MmM1MQ==
 
 users:
   - username: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com

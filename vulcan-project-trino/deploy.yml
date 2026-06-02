@@ -1,0 +1,68 @@
+version: v1alpha
+type: vulcan
+name: devicecadpsri
+spec:
+  runAsUser: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
+  compute: lnv-compute
+  engine: trino
+  repo:
+    url: https://github.com/Mebin-tmdc/dataos-2.0
+    syncFlags:
+      - '--ref=sri-branch-2'
+      - '--submodules=off'
+    baseDir: dataos-2.0/vulcan-project-trino
+    secret: sandbox:git-sync
+
+  workflow:
+    schedule:
+      crons:
+        - "@daily"
+      endOn: "2027-01-01T00:00:00-00:00"
+      timezone: "US/Pacific"
+      concurrencyPolicy: Forbid
+    logLevel: INFO
+    migrate:
+      command:
+        - vulcan
+      arguments:
+        - migrate
+    plan:
+      command:
+        - vulcan
+      arguments:
+        - --log-to-stdout
+        - plan
+        - --auto-apply
+        - --allow-destructive-model
+        - s3depot.vulcan_project_trino.*
+    run:
+      command:
+        - vulcan
+      arguments:
+        - --log-to-stdout
+        - run
+  api:
+    replicas: 1
+    logLevel: INFO
+    resource:
+      request:
+        cpu: "200m"
+        memory: "512Mi"
+      limit:
+        cpu: "1000m"
+        memory: "1Gi"
+  use:
+    projection:
+      secrets:
+        - id: sandbox:trino-config-secret-sri
+          contextAlias: trn
+      projections:
+        envVars:
+          - key: TRINO_HOST
+            template: "{{ secrets['trn'].HOST | base64_decode }}"
+          - key: TRINO_USER
+            template: "{{ secrets['trn'].USER | base64_decode }}"
+          - key: TRINO_CATALOG
+            template: "{{ secrets['trn'].CATALOG | base64_decode }}"
+          - key: TRINO_PASSWORD
+            template: "{{ secrets['trn'].PASSWORD | base64_decode }}"
