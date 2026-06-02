@@ -1,7 +1,7 @@
-# Converted from legacy: semantics/device_warranty.yml (physical model is s3depot.device_cadp.device_warranty)
+# Converted from legacy: semantics/device_warranty.yml (physical model is s3depot.device_meb.device_warranty)
 kind: semantic
 name: device_warranty
-depends_on: s3depot.device_cadp.device_warranty
+depends_on: s3depot.device_meb.device_warranty
 description: Device warranty coverage, expiration, and lifecycle tracking (semantic layer)
 
 ai_context:
