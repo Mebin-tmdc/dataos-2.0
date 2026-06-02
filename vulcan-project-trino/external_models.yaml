@@ -1,6 +1,6 @@
 
 
-- name: '"s3depot"."device_meb"."device_warranty"'
+- name: 's3depot.device_meb.device_warranty'
   grain: _id
   columns:
     _id: VARCHAR
@@ -26,7 +26,7 @@
     _nilus_load_id: TIMESTAMP
     _nilus_id: VARCHAR
 
-- name: '"s3depot"."device_meb"."devices"'
+- name: 's3depot.device_meb.devices'
   grain: id
   columns:
     id: VARCHAR
@@ -51,7 +51,7 @@
     _nilus_id: VARCHAR
     status: VARCHAR
 
-- name: '"s3depot"."device_meb"."issues"'
+- name: 's3depot.device_meb.issues'
   grain: issue_uuid
   columns:
     issue_uuid: VARCHAR
