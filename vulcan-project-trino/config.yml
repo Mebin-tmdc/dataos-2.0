@@ -1,12 +1,14 @@
-name: devicecadpmeb
-display_name: Device Orch 360 Consumer Aligned Data Product (CADP)
-description: "Device Orch 360 Consumer Aligned Data Product (CADP)"
+name: devicecadppari  
+display_name: Pari's Device Orch 360 Consumer Aligned Data Product
+description: "Pari's Device Orch 360 Consumer Aligned Data Product"
 discoverable: true
 version: 0.0.1
 domain: LDO
 alignment: consumer_aligned
 model_defaults:
   dialect: trino
+ignore_patterns:
+  - "deploy.yml"  
 tags:
   - trino
   - device-360-trino
@@ -23,23 +25,22 @@ gateways:
       type: trino
       host: "tcp.lnv-051826.dataos.cloud"
       port: 7432
-      user: "mebinmoncytmdcio"
+      user: "prajarathina_lenovocomextrubikdatasolutionsonmicrosoftcom"
       catalog: "s3depot"
       http_scheme: https
       method: basic
       password: "{{ env_var('TRINO_PASSWORD', '') }}"
       verify: true
-    # state_connection:
-    #   type: postgres
-    #   host: statestore
-    #   port: 5432
-    #   database: statestore
-    #   user: vulcan
-    #   password: vulcan
-    # state_schema: vulcan_project_trino   
+#     state_connection:
+#       type: duckdb
+#       database: ./statestore.duckdb
+# transpiler:
+#   base_url: "https://lnv-051826.dataos.cloud/transpiler"
+#   timeout: 100
+#   token: ""
 
 
 users:
-  - username: mebinmoncytmdcio
-    email: mebin.moncy@tmdc.io
+  - username: prajarathina_lenovocomextrubikdatasolutionsonmicrosoftcom
+    email: prajarathina_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
     type: OWNER

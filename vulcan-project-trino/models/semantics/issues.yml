@@ -1,7 +1,7 @@
 # Converted from legacy: semantics/issues.yml (physical model is s3depot.device_meb.issues)
 kind: semantic
 name: issues
-depends_on: s3depot.device_meb.issues
+depends_on: s3depot.device_pari.issues
 description: Device hardware and software issue diagnostics (semantic layer)
 
 ai_context:
