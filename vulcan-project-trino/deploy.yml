@@ -2,7 +2,7 @@ version: v1alpha
 type: vulcan
 name: devicecadpsri
 spec:
-  runAsUser: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
+  runAsUser: sgali1_lenovocomextrubikdatasolutionsonmicrosoftcom
   compute: lnv-compute
   engine: trino
   repo:

@@ -39,9 +39,3 @@ transpiler:
   timeout: 100
   token: dGVtcF90b2tlbi5jNjI0NTViOS1mZmMyLTRhZWYtYmI5Mi00YzAzNWZmMDkxMTMyMDE1ZDcyNDczOGY2MzdlMDI3MmIxYjlhMDk2MmM1MQ==
 
-users:
-  - username: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
-    email: sgali1@lenovo.com
-    type: OWNER
-
- 

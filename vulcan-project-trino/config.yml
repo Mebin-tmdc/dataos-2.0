@@ -25,7 +25,7 @@ gateways:
       type: trino
       host: "tcp.lnv-051826.dataos.cloud"
       port: 7432
-      user: "sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com"
+      user: "sgali1_lenovocomextrubikdatasolutionsonmicrosoftcom"
       catalog: "s3depot"
       http_scheme: https
       method: basic
@@ -41,7 +41,7 @@ gateways:
 #   token: 
 
 users:
-  - username: sgali1_lenovo.com#ext#@rubikdatasolutions.onmicrosoft.com
+  - username: sgali1_lenovocomextrubikdatasolutionsonmicrosoftcom
     email: sgali1@lenovo.com
     type: OWNER
 
