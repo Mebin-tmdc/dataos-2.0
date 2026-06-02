@@ -1,7 +1,7 @@
 # Converted from legacy: semantics/devices.yml (physical model is s3depot.device_meb.devices)
 kind: semantic
 name: devices
-depends_on: s3depot.device_meb.devices
+depends_on: s3depot.device_pari.devices
 description: Device inventory, classification, and fleet overview (semantic layer)
 
 ai_context:

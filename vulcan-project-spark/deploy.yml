@@ -1,6 +1,6 @@
 version: v1alpha
 type: vulcan
-name: devicesadpmeb
+name: devicesadppari
 tags:
   - spark
   - device-orch-360
